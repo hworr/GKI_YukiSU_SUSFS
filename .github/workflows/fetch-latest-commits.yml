@@ -32,7 +32,7 @@ jobs:
           set -euo pipefail
 
           COMMITS_FILE=".github/config/commits.json"
-          KSU_REPO="https://github.com/KernelSU-Next/KernelSU-Next.git"
+          YUKISU_REPO="https://github.com/Anatdx/YukiSU.git"
           SUSFS_REPO="https://gitlab.com/simonpunk/susfs4ksu.git"
 
           if [[ ! -f "$COMMITS_FILE" ]]; then
@@ -43,19 +43,19 @@ jobs:
           # Validate JSON early so we fail loudly on malformed edits.
           jq -e . "$COMMITS_FILE" >/dev/null
 
-          KSU_BRANCH="dev"
-          KSU_LATEST=$(git ls-remote "$KSU_REPO" "refs/heads/$KSU_BRANCH" | awk '{print $1}')
+          YUKISU_BRANCH="main"
+          YUKISU_LATEST=$(git ls-remote "$YUKISU_REPO" "refs/heads/$YUKISU_BRANCH" | awk '{print $1}')
 
-          if [[ -z "${KSU_LATEST:-}" ]]; then
-            echo "Failed to resolve KernelSU branch: $KSU_BRANCH"
+          if [[ -z "${YUKISU_LATEST:-}" ]]; then
+            echo "Failed to resolve YukiSU branch: $YUKISU_BRANCH"
             exit 1
           fi
 
           TMP_FILE=$(mktemp)
-          jq --arg commit "$KSU_LATEST" '.kernelsu.dev = $commit' "$COMMITS_FILE" > "$TMP_FILE"
+          jq --arg commit "$YUKISU_LATEST" '.yukisu.main = $commit' "$COMMITS_FILE" > "$TMP_FILE"
           mv "$TMP_FILE" "$COMMITS_FILE"
 
-          echo "KernelSU dev -> $KSU_LATEST"
+          echo "YukiSU main -> $YUKISU_LATEST"
 
           # Iterate current SUSFS keys (e.g. gki-android14-6.1) and fetch latest heads.
           while IFS= read -r branch; do
@@ -100,7 +100,7 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
           git add .github/config/commits.json
-          git commit -m "chore(ci): refresh KernelSU and SUSFS commit pins"
+          git commit -m "chore(ci): refresh YukiSU and SUSFS commit pins"
           git push origin "HEAD:${{ inputs.target_branch }}"
 
       - name: Summary

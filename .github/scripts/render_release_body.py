@@ -68,19 +68,19 @@ emit("**IMPORTANT DISCLAIMER**")
 for line in data["release"]["disclaimer"]:
     emit(line)
 
-kernelsu = data.get("kernelsu", {})
+yukisu = data.get("yukisu", {})
 emit()
-emit(f"## {kernelsu.get('name', 'KernelSU-Next')}")
-emit(f"- Version: {os.environ.get('KSU_VERSION', kernelsu.get('version', 'unknown'))}")
-emit(f"- Tag: {os.environ.get('KSU_GIT_TAG', kernelsu.get('tag', 'no-tag'))}")
-emit(f"- Branch: {os.environ.get('KSUN_BRANCH', kernelsu.get('branch', 'dev'))}")
-emit(f"- Commit: {os.environ.get('KSUN_COMMIT', kernelsu.get('commit', 'unknown'))}")
-if kernelsu.get("url"):
-    emit(f"- URL: {kernelsu['url']}")
-if kernelsu.get("manager"):
-    emit(f"- Manager: {kernelsu['manager']}")
+emit(f"## {yukisu.get('name', 'YukiSU')}")
+emit(f"- Version: {os.environ.get('KSU_VERSION', yukisu.get('version', 'unknown'))}")
+emit(f"- Tag: {os.environ.get('KSU_GIT_TAG', yukisu.get('tag', 'no-tag'))}")
+emit(f"- Branch: {os.environ.get('KSUN_BRANCH', yukisu.get('branch', 'main'))}")
+emit(f"- Commit: {os.environ.get('KSUN_COMMIT', yukisu.get('commit', 'unknown'))}")
+if yukisu.get("url"):
+    emit(f"- URL: {yukisu['url']}")
+if yukisu.get("manager"):
+    emit(f"- Manager: {yukisu['manager']}")
 
-skip_keys = {"release", "kernelsu"}
+skip_keys = {"release", "yukisu"}
 for key in data.keys():
     if key in skip_keys:
         continue

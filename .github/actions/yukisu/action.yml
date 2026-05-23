@@ -1,21 +1,21 @@
-name: Setup Wild KSU
-description: Download and configure Wild KSU with version tracking
+name: Setup YukiSU
+description: Download and configure YukiSU with version tracking
 
 runs:
   using: composite
   steps:
-    - name: Download Wild KSU
+    - name: Download YukiSU
       shell: bash
       working-directory: ${{ github.workspace }}/kernel
       run: |
         set -euo pipefail
 
         COMMITS_JSON="${{ github.workspace }}/.github/config/commits.json"
-        KSU_SETUP_COMMIT=$(jq -er '.kernelsu.dev' "$COMMITS_JSON")
+        YUKISU_SETUP_COMMIT=$(jq -er '.yukisu.main' "$COMMITS_JSON")
 
-        curl -LSs "https://raw.githubusercontent.com/KernelSU-Next/KernelSU-Next/dev/kernel/setup.sh" | bash -s "$KSU_SETUP_COMMIT"
+        curl -LSs "https://raw.githubusercontent.com/Anatdx/YukiSU/main/kernel/setup.sh" | bash -s "$YUKISU_SETUP_COMMIT"
         
-        cd KernelSU-Next/kernel
+        cd KernelSU/kernel
         
         COMMITS_COUNT=$(/usr/bin/git rev-list --count HEAD)
         BASE_VERSION=30000
@@ -38,7 +38,7 @@ runs:
     - name: Extract KSU Version Info
       id: ksu-version
       shell: bash
-      working-directory: ${{ github.workspace }}/kernel/KernelSU-Next
+      working-directory: ${{ github.workspace }}/kernel/KernelSU
       run: |
         # Extract and export KSU version info
         KSU_GIT_VERSION=$(git rev-list --count HEAD 2>/dev/null)

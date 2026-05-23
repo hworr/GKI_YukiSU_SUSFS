@@ -6,13 +6,19 @@
 Join the telegram here: https://t.me/WildKernelsTG
 
 # Features
-- [KernelSU-Next](#kernelsu-next)
+- [YukiSU](#yukisu)
 - [SUSFS v2.1.0](#susfs-v210)
 - [Baseband Guard (BBG)](#baseband-guard-bbg)
 - [DroidSpaces-OSS](#droidspaces-oss)
 - [Networking Improvements](#networking)
 
-## [KernelSU-Next](https://github.com/KernelSU-Next/KernelSU-Next)
+### Supported Root Methods
+- Magisk
+- KernelSU
+- YukiSU
+- APatch
+
+## [YukiSU](https://github.com/Anatdx/YukiSU)
 
 A kernel-based root solution for Android devices.
 
@@ -83,18 +89,17 @@ A lightweight, LXC-inspired container runtime for Android and Linux. Run full Li
 ### Prerequisites
 - Unlocked bootloader.
 - Backup your current boot image.
-- Have root access using Magisk / KernelSU / Apatch (Any forks).
+- Have root access using Magisk / KernelSU / YukiSU / Apatch (Any forks).
+- Back up your `boot.img`!
 
-### Via Kernel Flasher
-Download the correct AnyKernel3 ZIP for your device.
-If you previously used another root method, clean it up first:
-a. Magisk: perform a complete uninstall after flashing the AnyKernel3 ZIP.
-b. KSU LKM (boot/init_boot/vendor_boot‑patched): Flash back the stock boot/init_boot/vendor_boot depending on what you patched.
-c. KSU GKI: if you are 100% sure you already flashed stock init_boot/boot/vendor_boot, no action is needed; otherwise, follow the same steps as KSU LKM.
-d. APatch: remove /data/adb contents to avoid leftover root conflicts after flashing the AnyKernel3 ZIP.
-Flash the ZIP to the active slot using Kernel Flasher.
-Install the KernelSU‑Next Manager APK, same version as mentioned in the release notes.
-Open the KernelSU‑Next app.
+## Installation Steps (YukiSU/KernelSU/APatch/Magisk Manager App)
+
+1. **Download the Release**  
+   Download the zip file corresponding to your device's version.
+
+2. **Open your Manager App**  
+   Install the YukiSU Manager APK, same version as mentioned in the release notes.
+   Open the YukiSU app.
 Reboot the device if you performed any cleanup in step 2
 
 ## Force Load Kernel Modules (Bypass) — flashing with `Bypass-Image`

@@ -57,7 +57,7 @@ For GKI installation, please follow the official guide:
 ## 🏆 Credits
 
 - 🔐 **KernelSU**: Developed by [tiann](https://github.com/tiann/KernelSU)
-- 🚀 **KernelSU-Next**: Developed by [rifsxd](https://github.com/KernelSU-Next/KernelSU-Next)
+- 🚀 **YukiSU**: Developed by [Anatdx](https://github.com/Anatdx/YukiSU)
 - ✨ **Magic-KSU**: Developed by [5ec1cff](https://github.com/5ec1cff/KernelSU)
 - 🛡️ **SUSFS**: Developed by [simonpunk](https://gitlab.com/simonpunk/susfs4ksu.git)
 - 🛡️ **Baseband-guard (BBG)**: Developed by [vc-teahouse](https://github.com/vc-teahouse/Baseband-guard)

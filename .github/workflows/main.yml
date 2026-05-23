@@ -203,27 +203,27 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v5
 
-    - name: Extract KernelSU Version Info
+    - name: Extract YukiSU Version Info
       id: ksu_version
       env:
         COMMITS_JSON_PATH: ${{ env.COMMITS_JSON }}
       run: |
         set -euo pipefail
 
-        # Extract KernelSU commit and branch from commits config
-        KSUN_COMMIT=$(jq -er '.kernelsu.dev' "$COMMITS_JSON_PATH")
-        KSUN_BRANCH="dev"
+        # Extract YukiSU commit and branch from commits config
+        YUKISU_COMMIT=$(jq -er '.yukisu.main' "$COMMITS_JSON_PATH")
+        YUKISU_BRANCH="main"
 
-        # Clone KernelSU-Next on the specified branch
-        echo "Cloning KernelSU-Next from branch: $KSUN_BRANCH"
-        git clone --depth=1 --branch "$KSUN_BRANCH" https://github.com/KernelSU-Next/KernelSU-Next.git /tmp/kernelsu-next
+        # Clone YukiSU on the specified branch
+        echo "Cloning YukiSU from branch: $YUKISU_BRANCH"
+        git clone --depth=1 --branch "$YUKISU_BRANCH" https://github.com/Anatdx/YukiSU.git /tmp/yukisu
 
-        cd /tmp/kernelsu-next
+        cd /tmp/yukisu
 
         # Checkout the specific commit
-        echo "Checking out commit: $KSUN_COMMIT"
-        git fetch --depth=50 origin "$KSUN_COMMIT"
-        git checkout "$KSUN_COMMIT"
+        echo "Checking out commit: $YUKISU_COMMIT"
+        git fetch --depth=50 origin "$YUKISU_COMMIT"
+        git checkout "$YUKISU_COMMIT"
 
         # Extract version info
         COMMITS_COUNT=$(git rev-list --count HEAD)
@@ -233,12 +233,8 @@ jobs:
         # Extract git tag
         KSU_GIT_TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "no-tag")
 
-        MANAGER_RUN_ID=$(curl -fsSL "https://api.github.com/repos/KernelSU-Next/KernelSU-Next/actions/workflows/build-manager-ci.yml/runs?head_sha=${KSUN_COMMIT}" | jq -r '.workflow_runs[0].id // empty')
-        if [[ -n "${MANAGER_RUN_ID:-}" ]]; then
-          KSU_MANAGER="https://github.com/KernelSU-Next/KernelSU-Next/actions/runs/${MANAGER_RUN_ID}"
-        else
-          KSU_MANAGER="https://github.com/KernelSU-Next/KernelSU-Next/actions/workflows/build-manager-ci.yml"
-        fi
+        # No manager CI currently available on YukiSU repo, using releases page
+        KSU_MANAGER="https://github.com/Anatdx/YukiSU/releases"
 
         echo "Commits count: $COMMITS_COUNT"
         echo "KSU Version: $KSU_VERSION"
@@ -246,8 +242,8 @@ jobs:
         echo "KSU Manager: $KSU_MANAGER"
 
         # Export as environment for next step
-        echo "KSUN_BRANCH=$KSUN_BRANCH" >> $GITHUB_ENV
-        echo "KSUN_COMMIT=$KSUN_COMMIT" >> $GITHUB_ENV
+        echo "KSUN_BRANCH=$YUKISU_BRANCH" >> $GITHUB_ENV
+        echo "KSUN_COMMIT=$YUKISU_COMMIT" >> $GITHUB_ENV
         echo "KSU_COMMITS_COUNT=$COMMITS_COUNT" >> $GITHUB_ENV
         echo "KSU_VERSION=$KSU_VERSION" >> $GITHUB_ENV
         echo "KSU_GIT_TAG=$KSU_GIT_TAG" >> $GITHUB_ENV
@@ -386,27 +382,27 @@ jobs:
 
         echo "release_title=$release_title" >> "$GITHUB_OUTPUT"
 
-    - name: Extract KernelSU Version Info
+    - name: Extract YukiSU Version Info
       id: ksu_version
       env:
         COMMITS_JSON_PATH: ${{ env.COMMITS_JSON }}
       run: |
         set -euo pipefail
 
-        # Extract KernelSU commit and branch from commits config
-        KSUN_COMMIT=$(jq -er '.kernelsu.dev' "$COMMITS_JSON_PATH")
-        KSUN_BRANCH="dev"
+        # Extract YukiSU commit and branch from commits config
+        YUKISU_COMMIT=$(jq -er '.yukisu.main' "$COMMITS_JSON_PATH")
+        YUKISU_BRANCH="main"
 
-        # Clone KernelSU-Next on the specified branch
-        echo "Cloning KernelSU-Next from branch: $KSUN_BRANCH"
-        git clone --depth=1 --branch "$KSUN_BRANCH" https://github.com/KernelSU-Next/KernelSU-Next.git /tmp/kernelsu-next
+        # Clone YukiSU on the specified branch
+        echo "Cloning YukiSU from branch: $YUKISU_BRANCH"
+        git clone --depth=1 --branch "$YUKISU_BRANCH" https://github.com/Anatdx/YukiSU.git /tmp/yukisu
 
-        cd /tmp/kernelsu-next
+        cd /tmp/yukisu
 
         # Checkout the specific commit
-        echo "Checking out commit: $KSUN_COMMIT"
-        git fetch --depth=50 origin "$KSUN_COMMIT"
-        git checkout "$KSUN_COMMIT"
+        echo "Checking out commit: $YUKISU_COMMIT"
+        git fetch --depth=50 origin "$YUKISU_COMMIT"
+        git checkout "$YUKISU_COMMIT"
 
         # Extract version info
         COMMITS_COUNT=$(git rev-list --count HEAD)
@@ -416,12 +412,8 @@ jobs:
         # Extract git tag
         KSU_GIT_TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "no-tag")
 
-        MANAGER_RUN_ID=$(curl -fsSL "https://api.github.com/repos/KernelSU-Next/KernelSU-Next/actions/workflows/build-manager-ci.yml/runs?head_sha=${KSUN_COMMIT}" | jq -r '.workflow_runs[0].id // empty')
-        if [[ -n "${MANAGER_RUN_ID:-}" ]]; then
-          KSU_MANAGER="https://github.com/KernelSU-Next/KernelSU-Next/actions/runs/${MANAGER_RUN_ID}"
-        else
-          KSU_MANAGER="https://github.com/KernelSU-Next/KernelSU-Next/actions/workflows/build-manager-ci.yml"
-        fi
+        # No manager CI currently available on YukiSU repo, using releases page
+        KSU_MANAGER="https://github.com/Anatdx/YukiSU/releases"
 
         echo "Commits count: $COMMITS_COUNT"
         echo "KSU Version: $KSU_VERSION"
@@ -429,8 +421,8 @@ jobs:
         echo "KSU Manager: $KSU_MANAGER"
 
         # Export as environment for next step
-        echo "KSUN_BRANCH=$KSUN_BRANCH" >> $GITHUB_ENV
-        echo "KSUN_COMMIT=$KSUN_COMMIT" >> $GITHUB_ENV
+        echo "KSUN_BRANCH=$YUKISU_BRANCH" >> $GITHUB_ENV
+        echo "KSUN_COMMIT=$YUKISU_COMMIT" >> $GITHUB_ENV
         echo "KSU_COMMITS_COUNT=$COMMITS_COUNT" >> $GITHUB_ENV
         echo "KSU_VERSION=$KSU_VERSION" >> $GITHUB_ENV
         echo "KSU_GIT_TAG=$KSU_GIT_TAG" >> $GITHUB_ENV
